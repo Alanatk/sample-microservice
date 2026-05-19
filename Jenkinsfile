@@ -11,7 +11,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                sh 'chmod +x gradlew'
+                sh './gradlew build'
             }
         }
 
@@ -19,7 +20,7 @@ pipeline {
             steps {
                 sh '''
                 pkill -f "*.jar" || true
-                nohup java -jar target/*.jar > app.log 2>&1 &
+                nohup java -jar build/libs/*.jar > app.log 2>&1 &
                 '''
             }
         }
